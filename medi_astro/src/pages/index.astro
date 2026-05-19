@@ -1,5 +1,12 @@
 ---
-import { APP_ROUTES } from "@/config/routes";
-
-return Astro.redirect(APP_ROUTES.login);
 ---
+
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0;url=/auth/login" />
+    <title>MediConnect</title>
+  </head>
+  <body>
+    <script is:inline>window.location.replace('/auth/login');</script>
+  </body>
+</html>
