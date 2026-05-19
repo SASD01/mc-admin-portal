@@ -2,9 +2,6 @@
   "name": "medi_astro",
   "type": "module",
   "version": "0.0.1",
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -34,5 +31,11 @@
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3"
+  },
+  "overrides": {
+    "react-day-picker": {
+      "react": "$react",
+      "date-fns": "$date-fns"
+    }
   }
 }
