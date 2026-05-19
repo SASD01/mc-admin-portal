@@ -1,0 +1,107 @@
+---
+import AppLayout from '../layouts/AppLayout.astro';
+---
+
+<AppLayout title="MediConnect | Panel de Control" description="Panel administrativo" active="agenda">
+  <!-- Contenido principal -->
+  <div id="dashboard-content">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+        <span id="greeting-text">Buenos días</span>, <span id="admin-name" class="text-primary">Cargando...</span>
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400 mt-2">Aquí tienes un resumen de la agenda y actividades de hoy.</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- Tarjetas de resumen estéticas -->
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4">
+          <div class="p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Citas Hoy</p>
+            <p class="text-2xl font-bold text-slate-900 dark:text-white">12</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4">
+          <div class="p-3 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Personal Activo</p>
+            <p class="text-2xl font-bold text-slate-900 dark:text-white">8</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-4">
+          <div class="p-3 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-xl">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pendientes</p>
+            <p class="text-2xl font-bold text-slate-900 dark:text-white">3</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Planificar Agenda -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 min-h-[400px] flex items-center justify-center relative overflow-hidden group">
+       <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+       <div class="text-center relative z-10">
+         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-700/50 mb-5 text-slate-400 shadow-inner">
+           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+         </div>
+         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Planificador de Agenda</h3>
+         <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed">Selecciona un médico o especialidad en el menú lateral para comenzar a gestionar los horarios de hoy.</p>
+         <button class="mt-8 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 transform hover:-translate-y-0.5">
+           Comenzar Planificación
+         </button>
+       </div>
+    </div>
+  </div>
+
+  <script>
+    import { supabase } from '../lib/supabase';
+
+    // Función para obtener saludo dinámico según la hora
+    function getGreeting() {
+      const hour = new Date().getHours();
+      if (hour < 12) return 'Buenos días';
+      if (hour < 19) return 'Buenas tardes';
+      return 'Buenas noches';
+    }
+
+    async function loadUserData() {
+      const adminNameEl = document.getElementById('admin-name');
+      const greetingTextEl = document.getElementById('greeting-text');
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+
+        const { data: admin } = await supabase
+          .from('administrators')
+          .select('first_name, last_name')
+          .eq('id', session.user.id)
+          .single();
+
+        if (admin) {
+          if (greetingTextEl) greetingTextEl.textContent = getGreeting();
+          if (adminNameEl) adminNameEl.textContent = `${admin.first_name} ${admin.last_name}`;
+        }
+      } catch (err) {
+        console.error("Error cargando datos del admin:", err);
+      }
+    }
+
+    // Ejecutamos apenas carga la vista
+    loadUserData();
+  </script>
+</AppLayout>

@@ -1,0 +1,27 @@
+---
+import AppLayout from "@/layouts/AppLayout.astro";
+import { LiveClock } from "@/components/shared/live-clock";
+import { StaffManagement } from "@/components/staff/staff-management";
+---
+
+<AppLayout
+    title="MediConnect | Personal Médico"
+    description="Gestiona los médicos activos."
+    active="staff"
+>
+    <section>
+        <div class="flex items-start justify-between">
+            <div>
+                <h1 class="text-[32px] font-bold tracking-tight text-[#1E2330]">
+                    Listado de personal médico
+                </h1>
+                <p class="mt-1 text-lg text-slate-500">
+                    Gestiona los médicos activos para gestionar sus turnos.
+                </p>
+            </div>
+            <LiveClock client:load />
+        </div>
+
+        <StaffManagement client:load />
+    </section>
+</AppLayout>

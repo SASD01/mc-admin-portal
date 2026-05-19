@@ -1,0 +1,8 @@
+---
+import AuthLayout from '@/layouts/AuthLayout.astro';
+import { AuthCallback } from '@/components/auth/auth-callback';
+---
+
+<AuthLayout title="MediConnect | Validando sesión">
+  <AuthCallback client:load />
+</AuthLayout>

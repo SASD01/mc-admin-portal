@@ -1,0 +1,105 @@
+---
+import "@/styles/globals.css";
+import { SidebarProfile } from "@/components/layout/sidebar-profile";
+import { SidebarNav } from "@/components/layout/sidebar-nav";
+import { SidebarActions } from "@/components/layout/sidebar-actions";
+
+interface Props {
+  title: string;
+  description: string;
+  active: "agenda" | "staff";
+}
+
+const { title, description, active } = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-app-shell text-foreground">
+    <div id="layout-loading-screen" class="fixed inset-0 z-[100] flex min-h-screen bg-app-shell transition-opacity duration-500">
+      <aside class="fixed bottom-0 left-0 top-0 z-20 w-[280px] border-r border-slate-200/60 bg-white px-6 py-8">
+        <div class="h-12 w-3/4 animate-pulse rounded-xl bg-slate-200"></div>
+        <div class="mt-12 space-y-4">
+          <div class="h-10 w-full animate-pulse rounded-lg bg-slate-100"></div>
+          <div class="h-10 w-full animate-pulse rounded-lg bg-slate-100"></div>
+          <div class="h-10 w-full animate-pulse rounded-lg bg-slate-100"></div>
+        </div>
+      </aside>
+      <main class="ml-[280px] flex-1 px-10 py-10">
+        <div class="h-10 w-64 animate-pulse rounded-lg bg-slate-200 mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="h-[400px] w-full animate-pulse rounded-2xl bg-slate-100 md:col-span-2"></div>
+          <div class="h-[400px] w-full animate-pulse rounded-2xl bg-slate-100"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Contenedor principal de la app (oculto hasta verificar) -->
+    <div id="layout-app-content" class="flex min-h-screen bg-app-shell hidden opacity-0 transition-opacity duration-500">
+      <aside
+        class="fixed bottom-0 left-0 top-0 z-20 flex w-[280px] flex-col border-r border-slate-200/60 bg-sidebar px-6 py-8"
+      >
+        <SidebarProfile client:load />
+        <SidebarNav active={active} />
+        <SidebarActions client:load />
+      </aside>
+      <main class="ml-[280px] flex-1 px-8 py-4">
+        <div class="mx-auto w-full max-w-8xl">
+          <slot />
+        </div>
+      </main>
+    </div>
+  </body>
+    <script>
+      import { supabase } from '../lib/supabase';
+
+      async function protectGlobalRoute() {
+        const loadingScreen = document.getElementById('layout-loading-screen');
+        const appContent = document.getElementById('layout-app-content');
+
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (!session) {
+            window.location.replace('/login');
+            return;
+          }
+
+          const { data: admin, error } = await supabase
+            .from('administrators')
+            .select('id')
+            .eq('id', session.user.id)
+            .single();
+
+          if (error || !admin) {
+            await supabase.auth.signOut();
+            window.location.replace('/login');
+            return;
+          }
+
+          // Acceso concedido
+          if (loadingScreen && appContent) {
+            loadingScreen.classList.add('opacity-0');
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+              appContent.classList.remove('hidden');
+              requestAnimationFrame(() => {
+                appContent.classList.remove('opacity-0');
+              });
+            }, 500);
+          }
+        } catch (err) {
+          window.location.replace('/login');
+        }
+      }
+
+      protectGlobalRoute();
+    </script>
+</html>

@@ -1,0 +1,32 @@
+---
+import AppLayout from "@/layouts/AppLayout.astro";
+import { AgendaSidebar } from "@/components/agenda/agenda-sidebar";
+import { AgendaContent } from "@/components/agenda/agenda-content";
+---
+
+<AppLayout
+  title="MediConnect | Planificar Agenda"
+  description="Organiza el horario del personal médico."
+  active="agenda"
+>
+  <div
+    class="grid grid-cols-1 items-start gap-8 xl:grid-cols-[1fr_300px]"
+  >
+    <section class="w-full">
+      <h1
+        class="text-[28px] font-bold tracking-tight text-[#1E2330]"
+      >
+        Planificar Agenda
+      </h1>
+      <p class="mt-1 text-[15px] text-slate-500">
+        Organiza el horario del personal médico.
+      </p>
+
+      <div class="mt-4">
+        <AgendaContent client:load />
+      </div>
+    </section>
+
+    <AgendaSidebar client:load />
+  </div>
+</AppLayout>
