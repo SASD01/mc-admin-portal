@@ -5,11 +5,11 @@ import AppLayout from '../layouts/AppLayout.astro';
 <AppLayout title="MediConnect | Panel de Control" description="Panel administrativo" active="agenda">
   <!-- Contenido principal -->
   <div id="dashboard-content">
-    <header class="mb-8">
-      <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+    <header class="mb-6 lg:mb-8">
+      <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-3 lg:text-3xl">
         <span id="greeting-text">Buenos días</span>, <span id="admin-name" class="text-primary">Cargando...</span>
       </h1>
-      <p class="text-slate-500 dark:text-slate-400 mt-2">Aquí tienes un resumen de la agenda y actividades de hoy.</p>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 lg:text-base">Aquí tienes un resumen de la agenda y actividades de hoy.</p>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

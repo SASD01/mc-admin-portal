@@ -15,7 +15,7 @@ export function StaffToolbar({ view, setView, doctors, onEditDoctor }: StaffTool
   const selectDoctors = doctors.map(d => ({ value: String(d.id), label: d.name }));
 
   return (
-    <div className="mt-2 flex items-center justify-between">
+    <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-4">
         {/* White Pill Group */}
         <div className="flex h-11 items-center rounded-xl border border-slate-200 bg-white px-2 shadow-sm">

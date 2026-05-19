@@ -13,10 +13,10 @@ export function LiveClock() {
 
   return (
     <div className="text-right" suppressHydrationWarning>
-      <h2 className="text-[22px] font-medium capitalize text-[#464BD8]" suppressHydrationWarning>
+      <h2 className="text-lg font-medium capitalize text-[#464BD8] lg:text-[22px]" suppressHydrationWarning>
         {format(now, "EEEE, d 'de' MMMM yyyy", { locale: es })}
       </h2>
-      <p className="mt-1 text-[15px] text-slate-500 uppercase tracking-wide" suppressHydrationWarning>
+      <p className="mt-1 text-[13px] text-slate-500 uppercase tracking-wide lg:text-[15px]" suppressHydrationWarning>
         {format(now, 'hh:mm:ss a')}
       </p>
     </div>

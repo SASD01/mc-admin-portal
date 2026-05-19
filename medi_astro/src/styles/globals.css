@@ -76,3 +76,10 @@ body {
   background-size: 100% 100%, 42px 42px, 42px 42px;
   background-position: center top, center center, center center;
 }
+
+/* Mobile-safe scrolling */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .mobile-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

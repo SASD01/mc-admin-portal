@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { SidebarProfile } from "@/components/layout/sidebar-profile";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { SidebarActions } from "@/components/layout/sidebar-actions";
+import { MobileSidebar } from "@/components/layout/mobile-sidebar";
 
 interface Props {
   title: string;
@@ -16,7 +17,7 @@ const { title, description, active } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -25,7 +26,8 @@ const { title, description, active } = Astro.props;
   </head>
   <body class="bg-app-shell text-foreground">
     <div id="layout-loading-screen" class="fixed inset-0 z-[100] flex min-h-screen bg-app-shell transition-opacity duration-500">
-      <aside class="fixed bottom-0 left-0 top-0 z-20 w-[280px] border-r border-slate-200/60 bg-white px-6 py-8">
+      <!-- Loading skeleton: sidebar hidden on mobile -->
+      <aside class="fixed bottom-0 left-0 top-0 z-20 hidden w-[280px] border-r border-slate-200/60 bg-white px-6 py-8 lg:block">
         <div class="h-12 w-3/4 animate-pulse rounded-xl bg-slate-200"></div>
         <div class="mt-12 space-y-4">
           <div class="h-10 w-full animate-pulse rounded-lg bg-slate-100"></div>
@@ -33,7 +35,7 @@ const { title, description, active } = Astro.props;
           <div class="h-10 w-full animate-pulse rounded-lg bg-slate-100"></div>
         </div>
       </aside>
-      <main class="ml-[280px] flex-1 px-10 py-10">
+      <main class="flex-1 px-5 pt-16 lg:ml-[280px] lg:px-10 lg:pt-10">
         <div class="h-10 w-64 animate-pulse rounded-lg bg-slate-200 mb-8"></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="h-[400px] w-full animate-pulse rounded-2xl bg-slate-100 md:col-span-2"></div>
@@ -44,14 +46,20 @@ const { title, description, active } = Astro.props;
 
     <!-- Contenedor principal de la app (oculto hasta verificar) -->
     <div id="layout-app-content" class="flex min-h-screen bg-app-shell hidden opacity-0 transition-opacity duration-500">
+      <!-- Mobile sidebar: drawer + hamburger (visible < lg) -->
+      <MobileSidebar active={active} client:load />
+
+      <!-- Desktop sidebar (visible >= lg) -->
       <aside
-        class="fixed bottom-0 left-0 top-0 z-20 flex w-[280px] flex-col border-r border-slate-200/60 bg-sidebar px-6 py-8"
+        class="fixed bottom-0 left-0 top-0 z-20 hidden w-[280px] flex-col border-r border-slate-200/60 bg-sidebar px-6 py-8 lg:flex"
       >
         <SidebarProfile client:load />
         <SidebarNav active={active} />
         <SidebarActions client:load />
       </aside>
-      <main class="ml-[280px] flex-1 px-8 py-4">
+
+      <!-- Main content: no left margin on mobile, top padding for mobile header -->
+      <main class="flex-1 px-4 pt-16 pb-6 lg:ml-[280px] lg:px-8 lg:pt-4 lg:pb-4">
         <div class="mx-auto w-full max-w-8xl">
           <slot />
         </div>
