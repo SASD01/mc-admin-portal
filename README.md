@@ -114,4 +114,4 @@ PUBLIC_SUPABASE_ANON_KEY=<tu-clave-anonima>
 ## Licencia
 
 Este proyecto es de uso privado y forma parte del ecosistema **MediConnect**.  
-© 2025 MediConnect. Todos los derechos reservados.
+© 2026 MediConnect. Todos los derechos reservados.
