@@ -18,12 +18,7 @@ function SlotRow({ slot }: { slot: AvailableSlot }) {
   );
 }
 
-const PLACEHOLDER_SLOTS: AvailableSlot[] = [
-  { officeId: 3, officeName: 'Consultorio 3', timeRange: '08:00 AM - 10:00 AM', status: 'available' },
-  { officeId: 2, officeName: 'Consultorio 2', timeRange: '10:00 AM - 12:00 PM', status: 'available' },
-];
-
-export function AvailableRooms({ slots = PLACEHOLDER_SLOTS }: AvailableRoomsProps) {
+export function AvailableRooms({ slots = [] }: AvailableRoomsProps) {
   return (
     <section className="mt-3 rounded-[18px] border border-slate-200 bg-white p-4">
       <h3 className="text-[20px] font-semibold text-[#1E2330]">Consultorios Disponibles</h3>
@@ -31,9 +26,13 @@ export function AvailableRooms({ slots = PLACEHOLDER_SLOTS }: AvailableRoomsProp
         Sugerencias para optimizar la ocupación de consultorios hoy.
       </p>
       <div className="mt-3 space-y-2">
-        {slots.map((slot) => (
-          <SlotRow key={slot.officeId} slot={slot} />
-        ))}
+        {slots.length > 0 ? (
+          slots.map((slot) => <SlotRow key={slot.officeId} slot={slot} />)
+        ) : (
+          <p className="rounded-xl border border-dashed border-slate-200 py-6 text-center text-sm text-slate-400">
+            Sin consultorios disponibles para hoy.
+          </p>
+        )}
       </div>
     </section>
   );

@@ -1,11 +1,11 @@
-import { Menu, X } from 'lucide-react';
-import * as React from 'react';
-import { SidebarProfile } from './sidebar-profile';
-import { SidebarNav } from './sidebar-nav';
-import { SidebarActions } from './sidebar-actions';
+import { Menu, X } from "lucide-react";
+import * as React from "react";
+import { SidebarProfile } from "./sidebar-profile";
+import { SidebarNav } from "./sidebar-nav";
+import { SidebarActions } from "./sidebar-actions";
 
 interface MobileSidebarProps {
-  active: 'agenda' | 'staff';
+  active: "agenda" | "staff";
 }
 
 export function MobileSidebar({ active }: MobileSidebarProps) {
@@ -14,15 +14,15 @@ export function MobileSidebar({ active }: MobileSidebarProps) {
   // Close drawer on ESC key
   React.useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === "Escape") setOpen(false);
     };
     if (open) {
-      document.addEventListener('keydown', handleKey);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleKey);
+      document.body.style.overflow = "hidden";
     }
     return () => {
-      document.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = '';
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
     };
   }, [open]);
 
@@ -37,13 +37,15 @@ export function MobileSidebar({ active }: MobileSidebarProps) {
         >
           <Menu className="size-6" />
         </button>
-        <span className="ml-3 text-[15px] font-semibold text-[#1E2330]">MediConnect</span>
+        <span className="ml-3 text-[15px] font-semibold text-[#1E2330]">
+          MediConnect
+        </span>
       </header>
 
       {/* Overlay */}
       <div
         className={`fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
-          open ? 'opacity-100' : 'pointer-events-none opacity-0'
+          open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={() => setOpen(false)}
         aria-hidden="true"
@@ -51,8 +53,8 @@ export function MobileSidebar({ active }: MobileSidebarProps) {
 
       {/* Drawer */}
       <aside
-        className={`fixed bottom-0 left-0 top-0 z-50 flex w-[280px] flex-col border-r border-slate-200/60 bg-sidebar px-6 py-6 shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
-          open ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed bottom-0 left-0 top-0 z-50 flex w-70 flex-col border-r border-slate-200/60 bg-sidebar px-6 py-6 shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+          open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Close button */}

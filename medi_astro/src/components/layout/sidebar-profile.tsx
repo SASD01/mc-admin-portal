@@ -1,44 +1,34 @@
-import { Sparkles } from 'lucide-react';
-import * as React from 'react';
-import { getSupabaseClient } from '@/lib/supabase/client';
+import { Sparkles } from "lucide-react";
+import * as React from "react";
+import { supabase } from "@/lib/supabase";
 
 export function SidebarProfile() {
-  const [name, setName] = React.useState<string>('Administrador');
+  const [name, setName] = React.useState<string>("");
 
   React.useEffect(() => {
     let mounted = true;
 
-      getSupabaseClient()
-        .auth.getUser()
-        .then(async ({ data, error }) => {
-          if (mounted && !error && data?.user) {
-            const userId = data.user.id;
-            
-            // Consultamos la tabla administrators
-            const { data: adminData } = await getSupabaseClient()
-              .from('administrators')
-              .select('first_name, last_name')
-              .eq('id', userId)
-              .single();
+    supabase.auth.getUser().then(async ({ data, error }) => {
+      if (!mounted || error || !data?.user) return;
 
-            if (adminData && adminData.first_name) {
-              setName(`${adminData.first_name} ${adminData.last_name || ''}`.trim());
-            } else {
-              // Fallback
-              const rawName =
-                data.user.user_metadata?.fullName ||
-                data.user.app_metadata?.fullName ||
-                data.user.email?.split('@')[0] ||
-                'Administrador';
+      const { data: admin } = await supabase
+        .from("administrators")
+        .select("first_name, last_name")
+        .eq("id", data.user.id)
+        .single();
 
-              const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-              setName(formattedName);
-            }
-          }
-        })
-        .catch(() => {
-          // Ignorar errores
-        });
+      if (!mounted) return;
+
+      if (admin?.first_name) {
+        setName(`${admin.first_name} ${admin.last_name ?? ""}`.trim());
+      } else {
+        const raw =
+          data.user.user_metadata?.fullName ??
+          data.user.email?.split("@")[0] ??
+          "Administrador";
+        setName(raw.charAt(0).toUpperCase() + raw.slice(1));
+      }
+    });
 
     return () => {
       mounted = false;
@@ -46,21 +36,19 @@ export function SidebarProfile() {
   }, []);
 
   return (
-    <section className="relative z-10 flex min-h-[216px] flex-col items-center justify-center rounded-[24px] border border-slate-200/60 bg-white px-6 py-6 shadow-sm">
+    <section className="flex flex-col items-center rounded-3xl border border-slate-200/60 bg-white px-6 py-6 shadow-sm">
       <img
         src="/Profile.svg"
-        alt="Perfil del administrador"
+        alt="Perfil"
         width={80}
         height={80}
-        className="mb-4 size-[80px] rounded-full object-cover"
-        onError={(e) => {
-          (e.target as HTMLImageElement).src =
-            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23cbd5e1"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/%3E%3C/svg%3E';
-        }}
+        className="mb-4 size-20 rounded-full object-cover"
       />
-      <h2 className="text-xl font-medium tracking-tight text-[#1E2330]">{name}</h2>
-      <div className="mt-3 flex items-center gap-2 rounded-full bg-[#F6F6F8] px-3.5 py-1.5 text-sm font-medium text-[#1E2330]">
-        <Sparkles className="size-3.5" />
+      <h2 className="text-base font-semibold text-[#1E2330]">
+        {name || "Cargando..."}
+      </h2>
+      <div className="mt-3 flex items-center gap-2 rounded-full bg-[#F6F6F8] px-3.5 py-1.5 text-xs font-medium text-[#1E2330]">
+        <Sparkles className="size-3" />
         Administrador
       </div>
     </section>
